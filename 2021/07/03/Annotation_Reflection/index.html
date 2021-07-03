@@ -546,9 +546,10 @@
 <p> <code>Class c =Class.forName(&quot;java.lang.String&quot;)</code></p>
 </li>
 <li><p>加载完类之后,在堆内存的方法区中就产生了一个Class类型的对象(一个类只有一个Class对象),这个对象就包含了完整的类的结构信息.我们可以通过这个对象看到类的结构.这个对象的就像一面镜子,透过这个镜子看到类的结构,所以,我们形象的称之为:反射.</p>
+<p> <code>正常方式: [引入需要的&quot;包类&quot;名称]--&gt;[通过new实例化]--&gt;[获取实例化对象]</code> </p>
+<p> <code>反射方式: [实例化对象]--&gt;[getClass方法]--&gt;[获取完整的&quot;包类名称&quot;]</code></p>
 </li>
 </ul>
-<p>​              <code>正常方式: [引入需要的&quot;包类&quot;名称]--&gt;[通过new实例化]--&gt;[获取实例化对象]</code><br>​              <code>反射方式: [实例化对象]--&gt;[getClass方法]--&gt;[获取完整的&quot;包类名称&quot;]</code></p>
 <p><strong>提供的功能:</strong></p>
 <ul>
 <li>在运行时判断任意一个对象所属的类</li>
@@ -601,19 +602,17 @@
 </li>
 </ul>
 <h3 id="3-获取Class类的实例"><a href="#3-获取Class类的实例" class="headerlink" title="3.获取Class类的实例"></a><strong>3.获取Class类的实例</strong></h3><ul>
-<li>已知具体的类名,通过class属性获取,该方法最为安全可靠,程序性最高.</li>
-</ul>
-<p>​               <code>Class c1 = person.class;</code></p>
-<ul>
-<li>已知某个类的实例对象,调用该实例的getClass方法调用Class对象</li>
-</ul>
-<p>​               <code>Class c2 = person.getClass();</code></p>
-<ul>
-<li>已知一个类的包路径,且该类在路径里,通过Class的静态方法forName()获取,可能抛出ClassNotFo undException异常</li>
-</ul>
-<p>​               <code>Class c3 = Class.forName(&quot;demo1.Student&quot;);</code></p>
-<ul>
-<li>内置基本数据类型可以直接用类名.Type  </li>
+<li><p>已知具体的类名,通过class属性获取,该方法最为安全可靠,程序性最高.</p>
+<p> <code>Class c1 = person.class;</code></p>
+</li>
+<li><p>已知某个类的实例对象,调用该实例的getClass方法调用Class对象</p>
+<p><code>Class c2 = person.getClass();</code></p>
+</li>
+<li><p>已知一个类的包路径,且该类在路径里,通过Class的静态方法forName()获取,可能抛出ClassNotFo undException异常</p>
+<p> <code>Class c3 = Class.forName(&quot;demo1.Student&quot;);</code></p>
+</li>
+<li><p>内置基本数据类型可以直接用类名.Type  </p>
+</li>
 </ul>
 <p>PS:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">public class Reflection1 &#123;</span><br><span class="line">    public static void main(String[] args) throws ClassNotFoundException &#123;</span><br><span class="line">        Peison peison1 = new Student();</span><br><span class="line">        System.out.println(peison1.getName());</span><br><span class="line">        //方式1:通过对象获得</span><br><span class="line">        Class c1 = peison1.getClass();</span><br><span class="line">        System.out.println(c1);</span><br><span class="line">        //方式2:通过类名获得</span><br><span class="line">        Class&lt;Student&gt; c2 = Student.class;</span><br><span class="line">        System.out.println(c2);</span><br><span class="line">        //方式3:通过类路径获得</span><br><span class="line">        Class c3 = Class.forName(&quot;Reflection.Student&quot;);</span><br><span class="line">        System.out.println(c3);</span><br><span class="line">        System.out.println( c3.getName());</span><br><span class="line">        //方式4:基本内置类型的包装类都有一个TYPE属性</span><br><span class="line">        Class c4 = Double.TYPE;</span><br><span class="line">        System.out.println(c4);</span><br><span class="line">        //获取父类类型</span><br><span class="line">        Class c5 = c1.getSuperclass();</span><br><span class="line">        System.out.println(c5);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//人类</span><br><span class="line">class  Peison&#123;</span><br><span class="line">    private String name;//学生姓名</span><br><span class="line">    public  Peison()&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    public Peison(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setName(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;Peison&#123;&quot; +</span><br><span class="line">                &quot;name=&#x27;&quot; + name + &#x27;\&#x27;&#x27; +</span><br><span class="line">                &#x27;&#125;&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//学生</span><br><span class="line">class Student extends Peison&#123;</span><br><span class="line">    public  Student()&#123;</span><br><span class="line"></span><br><span class="line">        this.setName(&quot;学生&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Teacher extends  Peison&#123;</span><br><span class="line">    public Teacher()&#123;</span><br><span class="line">        this.setName(&quot;老师&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
