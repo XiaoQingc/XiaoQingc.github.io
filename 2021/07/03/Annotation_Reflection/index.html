@@ -548,7 +548,7 @@
 <li><p>加载完类之后,在堆内存的方法区中就产生了一个Class类型的对象(一个类只有一个Class对象),这个对象就包含了完整的类的结构信息.我们可以通过这个对象看到类的结构.这个对象的就像一面镜子,透过这个镜子看到类的结构,所以,我们形象的称之为:反射.</p>
 </li>
 </ul>
-<p>​        <code>正常方式: [引入需要的&quot;包类&quot;名称]--&gt;[通过new实例化]--&gt;[获取实例化对象]</code><br>​        <code>反射方式: [实例化对象]--&gt;[getClass方法]--&gt;[获取完整的&quot;包类名称&quot;]</code></p>
+<p>​              <code>正常方式: [引入需要的&quot;包类&quot;名称]--&gt;[通过new实例化]--&gt;[获取实例化对象]</code><br>​              <code>反射方式: [实例化对象]--&gt;[getClass方法]--&gt;[获取完整的&quot;包类名称&quot;]</code></p>
 <p><strong>提供的功能:</strong></p>
 <ul>
 <li>在运行时判断任意一个对象所属的类</li>
@@ -603,15 +603,15 @@
 <h3 id="3-获取Class类的实例"><a href="#3-获取Class类的实例" class="headerlink" title="3.获取Class类的实例"></a><strong>3.获取Class类的实例</strong></h3><ul>
 <li>已知具体的类名,通过class属性获取,该方法最为安全可靠,程序性最高.</li>
 </ul>
-<p>​        <code>Class c1 = person.class;</code></p>
+<p>​               <code>Class c1 = person.class;</code></p>
 <ul>
 <li>已知某个类的实例对象,调用该实例的getClass方法调用Class对象</li>
 </ul>
-<p>​        <code>Class c2 = person.getClass();</code></p>
+<p>​               <code>Class c2 = person.getClass();</code></p>
 <ul>
 <li>已知一个类的包路径,且该类在路径里,通过Class的静态方法forName()获取,可能抛出ClassNotFo undException异常</li>
 </ul>
-<p>​        <code>Class c3 = Class.forName(&quot;demo1.Student&quot;);</code></p>
+<p>​               <code>Class c3 = Class.forName(&quot;demo1.Student&quot;);</code></p>
 <ul>
 <li>内置基本数据类型可以直接用类名.Type  </li>
 </ul>
