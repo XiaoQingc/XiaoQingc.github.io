@@ -617,20 +617,15 @@
 <h3 id="5-类的加载与ClassLoader的理解"><a href="#5-类的加载与ClassLoader的理解" class="headerlink" title="5.类的加载与ClassLoader的理解"></a><strong>5.类的加载与ClassLoader的理解</strong></h3><p><strong>加载 :</strong> 将class类文件字节码内容加载到内存中,并将这些静态数据转换成方法区的运行时的数据结构,然后再生成代表这个类的java.lang.Class类对象</p>
 <p> <strong>链接 :</strong> 将Java的二进制代码合并到JVM的运行状态之中的过程.</p>
 <ul>
-<li><p>验证 : 确保加载的类信息符合JVM规范,没有安全方面的问题</p>
-</li>
-<li><p>准备 : 证式为类变量 (static) 分配内存并且设置类变量默认初始值的阶段,这些内存都将在方法区中进行分配.</p>
-</li>
-<li><p>解析 : 虚拟机常量池内的符号引用 (常量名) 替换为直接引用(地址)的过程.</p>
-</li>
-<li><p><em>初始化 :</em>* </p>
-</li>
-<li><p>执行类构造器<clinit>()方法的过程.类构造器<clinit>()方法是由编译器自动收集类中所有类变量的赋值动作和静态代码块中的语句合并产生的.<strong>(类构造器是构造类信息的,不是构造类对象的构造器)</strong></p>
-</li>
-<li><p>当初始化一个类的时候,如果发现父类还未初始化,则需要先将父类初始化.</p>
-</li>
-<li><p>虚拟机会保证一个类的<clinit>()方法在多线程环境中被正确加锁和同步</p>
-</li>
+<li>验证 : 确保加载的类信息符合JVM规范,没有安全方面的问题</li>
+<li>准备 : 证式为类变量 (static) 分配内存并且设置类变量默认初始值的阶段,这些内存都将在方法区中进行分配.</li>
+<li>解析 : 虚拟机常量池内的符号引用 (常量名) 替换为直接引用(地址)的过程.</li>
+</ul>
+<p><strong>初始化 ：</strong></p>
+<ul>
+<li>执行类构造器<clinit>()方法的过程.类构造器<clinit>()方法是由编译器自动收集类中所有类变量的赋值动作和静态代码块中的语句合并产生的.<strong>(类构造器是构造类信息的,不是构造类对象的构造器)</strong></li>
+<li>当初始化一个类的时候,如果发现父类还未初始化,则需要先将父类初始化.</li>
+<li>虚拟机会保证一个类的<clinit>()方法在多线程环境中被正确加锁和同步</li>
 </ul>
 <p>PS:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">public class Reflection2 &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        A a = new A();</span><br><span class="line">        System.out.println(A.m);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        /*</span><br><span class="line">        1.加载到内存,会产生一个类对应Class类对象</span><br><span class="line">        2.链接,链接结束后m= 0</span><br><span class="line">        3.初始化</span><br><span class="line">              &lt;clinit&gt;()&#123;</span><br><span class="line">                      m = 100</span><br><span class="line">                      System.out.println(&quot;A类静态代码块初始化&quot;);</span><br><span class="line">                      m=300;</span><br><span class="line">              &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">         */</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class  A&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.println(&quot;A类静态代码块初始化&quot;);</span><br><span class="line">        m=300;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    static  int m = 100;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public A() &#123;</span><br><span class="line">        System.out.println(&quot;A类无参构造初始化&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
