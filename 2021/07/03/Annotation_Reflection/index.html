@@ -541,7 +541,119 @@
 
 
 
-<h2 id="二-反射"><a href="#二-反射" class="headerlink" title="二 反射"></a>二 反射</h2><h3 id="1-什么是发射"><a href="#1-什么是发射" class="headerlink" title="1.什么是发射"></a>1.什么是发射</h3>
+<h2 id="二-反射"><a href="#二-反射" class="headerlink" title="二 反射"></a>二 反射</h2><h3 id="1-什么是反射"><a href="#1-什么是反射" class="headerlink" title="1.什么是反射"></a>1.什么是反射</h3><ul>
+<li>Reflection(反射)是Java被视为动态语言的关键,发射机制运行程序在执行器借助于Reflection API取得任何类的内部信息,并能直接操作任意对象的内部属性及方法.   </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c =Class.forName(&quot;java.lang.String&quot;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>加载完类之后,在堆内存的方法区中就产生了一个Class类型的对象(一个类只有一个Class对象),这个对象就包含了完整的类的结构信息.我们可以通过这个对象看到类的结构.这个对象的就像一面镜子,透过这个镜子看到类的结构,所以,我们形象的称之为:反射.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">正常方式: [引入需要的&quot;包类&quot;名称]--&gt;[通过new实例化]--&gt;[获取实例化对象]     </span><br><span class="line">反射方式: [实例化对象]--&gt;[getClass方法]--&gt;[获取完整的&quot;包类名称&quot;]</span><br></pre></td></tr></table></figure>
+
+<p><strong>提供的功能:</strong></p>
+<ul>
+<li>在运行时判断任意一个对象所属的类</li>
+<li>在运行时构造任意一个类的对象</li>
+<li>在运行时判断任意一个类所具有的成员变量和方法</li>
+<li>在运行时获取泛型信息</li>
+<li>在运行时调用任意一个对象的成员变量和方法</li>
+<li>在运行时处理注解</li>
+<li>生成动态代理 </li>
+</ul>
+<p><strong>优点:</strong></p>
+<ul>
+<li>可以实现动态创建对象和编译,体现出很大的灵活性</li>
+</ul>
+<p><strong>缺点:</strong></p>
+<ul>
+<li>对性能有影响.使用反射基本上是一种解释操作,我们可以告诉JVM,我们希望什么并且它满足我们的要求.这类操作总是慢于 <strong>直接执行相同的操作</strong></li>
+</ul>
+<h3 id="2-获得反射对象-Class类"><a href="#2-获得反射对象-Class类" class="headerlink" title="2.获得反射对象(Class类)"></a><strong>2.获得反射对象(Class类)</strong></h3><p><strong>Class类:</strong></p>
+<p> 对象找镜子后可以得到的信息:某个类的属性丶方法和构造器丶某个类到底实现了哪个接口.对于每个类而言,JRE都为其保留一个不变的Class的对象.一个Class对象包含了特定某个结构（class/interface/</p>
+<p>enum/annotation/primitive type/void[])的有关信息.</p>
+<ul>
+<li>Class本身也是一个类</li>
+<li>Class对象只能有系统建立对象</li>
+<li>一个加载的类在JVM中只会有一个Class实例</li>
+<li>一个Class对象对应的是一个加载到JVM中的一个.class文件</li>
+<li>每个类的实例都会记得自己是由哪个Class实例所生成</li>
+<li>通过Class可以完整地得到一个类中的所有被加载的结构</li>
+<li>Class类是Reflection 的根源,针对任何你想动态加载丶运行的类,唯有先获得相应的Class对象</li>
+</ul>
+<p><strong>常用方法</strong>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">* static ClassforName ( Sting name )返回指定类名 name 的 Class 对象</span><br><span class="line"></span><br><span class="line">* Object newlnstance () 调用缺省构造函数,返回 Class 对象的一个实例</span><br><span class="line"></span><br><span class="line">* getName() 返回此 Class 对象所表示的实体(类,接口,数组类 (或 void )的名称。</span><br><span class="line"></span><br><span class="line">* Class getSuperClass0)返回当前 Class 对象的父类的 Class 对象</span><br><span class="line"></span><br><span class="line">* Classlgetnterfaces ()获取当前 Class 对象的接口</span><br><span class="line"></span><br><span class="line">* ClassLoader getClassLoader ()返回该类的类加载器</span><br><span class="line"></span><br><span class="line">* Constructorl getConstructors0 返回一个包含某些 Constructor 对象的数组</span><br><span class="line"></span><br><span class="line">* Method getMothed(String name,Class...T) 返回Method对象,此对象的形参类型为paramType</span><br><span class="line"></span><br><span class="line">* Field[] getDeclardFields() 返回Field对象的一个数组</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-获取Class类的实例"><a href="#3-获取Class类的实例" class="headerlink" title="3.获取Class类的实例"></a><strong>3.获取Class类的实例</strong></h3><ul>
+<li>已知具体的类名,通过class属性获取,该方法最为安全可靠,程序性最高.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c1 = person.class;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>已知某个类的实例对象,调用该实例的getClass方法调用Class对象</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c2 = person.getClass();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>已知一个类的包路径,且该类在路径里,通过Class的静态方法forName()获取,可能抛出ClassNotFo undException异常</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c3 = Class.forName(&quot;demo1.Student&quot;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>内置基本数据类型可以直接用类名.Type  </li>
+</ul>
+<p>PS:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">public class Reflection1 &#123;</span><br><span class="line">    public static void main(String[] args) throws ClassNotFoundException &#123;</span><br><span class="line">        Peison peison1 = new Student();</span><br><span class="line">        System.out.println(peison1.getName());</span><br><span class="line">        //方式1:通过对象获得</span><br><span class="line">        Class c1 = peison1.getClass();</span><br><span class="line">        System.out.println(c1);</span><br><span class="line">        //方式2:通过类名获得</span><br><span class="line">        Class&lt;Student&gt; c2 = Student.class;</span><br><span class="line">        System.out.println(c2);</span><br><span class="line">        //方式3:通过类路径获得</span><br><span class="line">        Class c3 = Class.forName(&quot;Reflection.Student&quot;);</span><br><span class="line">        System.out.println(c3);</span><br><span class="line">        System.out.println( c3.getName());</span><br><span class="line">        //方式4:基本内置类型的包装类都有一个TYPE属性</span><br><span class="line">        Class c4 = Double.TYPE;</span><br><span class="line">        System.out.println(c4);</span><br><span class="line">        //获取父类类型</span><br><span class="line">        Class c5 = c1.getSuperclass();</span><br><span class="line">        System.out.println(c5);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//人类</span><br><span class="line">class  Peison&#123;</span><br><span class="line">    private String name;//学生姓名</span><br><span class="line">    public  Peison()&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    public Peison(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setName(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;Peison&#123;&quot; +</span><br><span class="line">                &quot;name=&#x27;&quot; + name + &#x27;\&#x27;&#x27; +</span><br><span class="line">                &#x27;&#125;&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//学生</span><br><span class="line">class Student extends Peison&#123;</span><br><span class="line">    public  Student()&#123;</span><br><span class="line"></span><br><span class="line">        this.setName(&quot;学生&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Teacher extends  Peison&#123;</span><br><span class="line">    public Teacher()&#123;</span><br><span class="line">        this.setName(&quot;老师&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-哪些类型可以有Class类型"><a href="#4-哪些类型可以有Class类型" class="headerlink" title="4.哪些类型可以有Class类型?"></a><strong>4.哪些类型可以有Class类型?</strong></h3><ul>
+<li>class : 外部类,成员(成员内部类,静态内部类),局部内部类,匿名内部类</li>
+<li>interface : 接口</li>
+<li>[]: 数组</li>
+<li>enum : 枚举</li>
+<li>annotation : 注解@interface</li>
+<li>primirive type : 基本数据类型</li>
+<li>void</li>
+</ul>
+<h3 id="5-类的加载与ClassLoader的理解"><a href="#5-类的加载与ClassLoader的理解" class="headerlink" title="5.类的加载与ClassLoader的理解"></a><strong>5.类的加载与ClassLoader的理解</strong></h3><p><strong>加载 :</strong> 将class类文件字节码内容加载到内存中,并将这些静态数据转换成方法区的运行时的数据结构,然后再生成代表这个类的java.lang.Class类对象</p>
+<p> <strong>链接 :</strong> 将Java的二进制代码合并到JVM的运行状态之中的过程.</p>
+<ul>
+<li><p>验证 : 确保加载的类信息符合JVM规范,没有安全方面的问题</p>
+</li>
+<li><p>准备 : 证式为类变量 (static) 分配内存并且设置类变量默认初始值的阶段,这些内存都将在方法区中进行分配.</p>
+</li>
+<li><p>解析 : 虚拟机常量池内的符号引用 (常量名) 替换为直接引用(地址)的过程.</p>
+</li>
+<li><p><em>初始化 :</em>* </p>
+</li>
+<li><p>执行类构造器<clinit>()方法的过程.类构造器<clinit>()方法是由编译器自动收集类中所有类变量的赋值动作和静态代码块中的语句合并产生的.<strong>(类构造器是构造类信息的,不是构造类对象的构造器)</strong></p>
+</li>
+<li><p>当初始化一个类的时候,如果发现父类还未初始化,则需要先将父类初始化.</p>
+</li>
+<li><p>虚拟机会保证一个类的<clinit>()方法在多线程环境中被正确加锁和同步</p>
+</li>
+</ul>
+<p>PS:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">public class Reflection2 &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        A a = new A();</span><br><span class="line">        System.out.println(A.m);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        /*</span><br><span class="line">        1.加载到内存,会产生一个类对应Class类对象</span><br><span class="line">        2.链接,链接结束后m= 0</span><br><span class="line">        3.初始化</span><br><span class="line">              &lt;clinit&gt;()&#123;</span><br><span class="line">                      m = 100</span><br><span class="line">                      System.out.println(&quot;A类静态代码块初始化&quot;);</span><br><span class="line">                      m=300;</span><br><span class="line">              &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">         */</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class  A&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.println(&quot;A类静态代码块初始化&quot;);</span><br><span class="line">        m=300;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    static  int m = 100;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public A() &#123;</span><br><span class="line">        System.out.println(&quot;A类无参构造初始化&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>6.什么时候会发生类的初始化？</strong></p>
+<p><strong>类的主动引用（一定会发生类的初始化）：</strong></p>
+<ul>
+<li>当虚拟级启动，先初始化main方法所在的类</li>
+<li>new一个类的对象</li>
+<li>调用类的静态方法和静态成员（除了final常量）</li>
+<li>通过java.lang.reflect包的方法对类进行发射调用</li>
+<li>当初始一个类的时候，如果父类没有被初始化，先将父类初始化。</li>
+</ul>
+<p><strong>类的被动引用（不会发生类的初始化）：</strong></p>
+<ul>
+<li>当访问一个静态域的时，只有真正声明这个域的类才会被初始化. <strong>如：当通过子类引用父类的静态变量时，不会使子类初始化.</strong></li>
+<li>通过定义数组类引用，此类不会被初始化.</li>
+<li>引用常量不会触发此类的初始化.<strong>（常量在链接阶段就已经存入调用类的常量池中了）</strong></li>
+</ul>
+<p>PS:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">public class Reflection3 &#123;</span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.println(&quot;main被加载&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">/*   public Reflection3() &#123;</span><br><span class="line">        System.out.println(&quot;main被加载&quot;);</span><br><span class="line">    &#125;*/</span><br><span class="line">    public static void main(String[] args) throws ClassNotFoundException &#123;</span><br><span class="line">        //1.主动引用</span><br><span class="line">       /* Son son =new Son();*/</span><br><span class="line">        //2.反射也能主动引用</span><br><span class="line">      /*  Class.forName(&quot;Reflection.Son&quot;);*/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //被动引用</span><br><span class="line">        //1.直接通过子类名调用父类的静态变量,子类不会被初始化</span><br><span class="line">        /*System.out.println(Son.b);*/</span><br><span class="line">        //2.创建数组也不会使类初始化,因为这里声明数组,只是开辟一块空间.</span><br><span class="line">       /* Son[] array = new Son[5];*/</span><br><span class="line">        //3.调用常量也不会使类初始化</span><br><span class="line">        System.out.println(Son.M);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class  Father&#123;</span><br><span class="line">    static  int b =2;</span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.println(&quot;父类被加载&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">   /* public Father() &#123;</span><br><span class="line">        System.out.println(&quot;父类被加载&quot;);</span><br><span class="line">    &#125;*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Son extends  Father&#123;</span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.println(&quot;子类被加载&quot;);</span><br><span class="line">        m = 300;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /*public Son() &#123;</span><br><span class="line">        System.out.println(&quot;子类被加载&quot;);</span><br><span class="line">    &#125;*/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    static  int m = 100;</span><br><span class="line">    static final int M = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
                 
             </div>
             <hr/>
