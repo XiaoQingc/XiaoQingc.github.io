@@ -542,14 +542,13 @@
 
 
 <h2 id="二-反射"><a href="#二-反射" class="headerlink" title="二 反射"></a>二 反射</h2><h3 id="1-什么是反射"><a href="#1-什么是反射" class="headerlink" title="1.什么是反射"></a>1.什么是反射</h3><ul>
-<li>Reflection(反射)是Java被视为动态语言的关键,发射机制运行程序在执行器借助于Reflection API取得任何类的内部信息,并能直接操作任意对象的内部属性及方法.   </li>
+<li><p>Reflection(反射)是Java被视为动态语言的关键,发射机制运行程序在执行器借助于Reflection API取得任何类的内部信息,并能直接操作任意对象的内部属性及方法.   </p>
+<p> <code>Class c =Class.forName(&quot;java.lang.String&quot;)</code></p>
+</li>
+<li><p>加载完类之后,在堆内存的方法区中就产生了一个Class类型的对象(一个类只有一个Class对象),这个对象就包含了完整的类的结构信息.我们可以通过这个对象看到类的结构.这个对象的就像一面镜子,透过这个镜子看到类的结构,所以,我们形象的称之为:反射.</p>
+</li>
 </ul>
-<p>​     <code>Class c =Class.forName(&quot;java.lang.String&quot;)</code></p>
-<ul>
-<li>加载完类之后,在堆内存的方法区中就产生了一个Class类型的对象(一个类只有一个Class对象),这个对象就包含了完整的类的结构信息.我们可以通过这个对象看到类的结构.这个对象的就像一面镜子,透过这个镜子看到类的结构,所以,我们形象的称之为:反射.</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">正常方式: [引入需要的&quot;包类&quot;名称]--&gt;[通过new实例化]--&gt;[获取实例化对象]     </span><br><span class="line">反射方式: [实例化对象]--&gt;[getClass方法]--&gt;[获取完整的&quot;包类名称&quot;]</span><br></pre></td></tr></table></figure>
-
+<p>​        <code>正常方式: [引入需要的&quot;包类&quot;名称]--&gt;[通过new实例化]--&gt;[获取实例化对象]</code><br>​        <code>反射方式: [实例化对象]--&gt;[getClass方法]--&gt;[获取完整的&quot;包类名称&quot;]</code></p>
 <p><strong>提供的功能:</strong></p>
 <ul>
 <li>在运行时判断任意一个对象所属的类</li>
@@ -581,23 +580,38 @@
 <li>Class类是Reflection 的根源,针对任何你想动态加载丶运行的类,唯有先获得相应的Class对象</li>
 </ul>
 <p><strong>常用方法</strong>:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">* static ClassforName ( Sting name )返回指定类名 name 的 Class 对象</span><br><span class="line"></span><br><span class="line">* Object newlnstance () 调用缺省构造函数,返回 Class 对象的一个实例</span><br><span class="line"></span><br><span class="line">* getName() 返回此 Class 对象所表示的实体(类,接口,数组类 (或 void )的名称。</span><br><span class="line"></span><br><span class="line">* Class getSuperClass0)返回当前 Class 对象的父类的 Class 对象</span><br><span class="line"></span><br><span class="line">* Classlgetnterfaces ()获取当前 Class 对象的接口</span><br><span class="line"></span><br><span class="line">* ClassLoader getClassLoader ()返回该类的类加载器</span><br><span class="line"></span><br><span class="line">* Constructorl getConstructors0 返回一个包含某些 Constructor 对象的数组</span><br><span class="line"></span><br><span class="line">* Method getMothed(String name,Class...T) 返回Method对象,此对象的形参类型为paramType</span><br><span class="line"></span><br><span class="line">* Field[] getDeclardFields() 返回Field对象的一个数组</span><br></pre></td></tr></table></figure>
-
+<ul>
+<li><p><code>static ClassforName ( Sting name )返回指定类名 name 的 Class 对象</code></p>
+</li>
+<li><p><code>Object newlnstance () 调用缺省构造函数,返回 Class 对象的一个实例</code></p>
+</li>
+<li><p><code>getName() 返回此 Class 对象所表示的实体(类,接口,数组类 (或 void )的名称。</code></p>
+</li>
+<li><p><code>Class getSuperClass0)返回当前 Class 对象的父类的 Class 对象</code></p>
+</li>
+<li><p><code>Classlgetnterfaces ()获取当前 Class 对象的接口</code></p>
+</li>
+<li><p><code>ClassLoader getClassLoader ()返回该类的类加载器</code></p>
+</li>
+<li><p><code>Constructorl getConstructors0 返回一个包含某些 Constructor 对象的数组</code></p>
+</li>
+<li><p><code>Method getMothed(String name,Class...T) 返回Method对象,此对象的形参类型为paramType</code></p>
+</li>
+<li><p><code>Field[] getDeclardFields() 返回Field对象的一个数组</code></p>
+</li>
+</ul>
 <h3 id="3-获取Class类的实例"><a href="#3-获取Class类的实例" class="headerlink" title="3.获取Class类的实例"></a><strong>3.获取Class类的实例</strong></h3><ul>
 <li>已知具体的类名,通过class属性获取,该方法最为安全可靠,程序性最高.</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c1 = person.class;</span><br></pre></td></tr></table></figure>
-
+<p>​        <code>Class c1 = person.class;</code></p>
 <ul>
 <li>已知某个类的实例对象,调用该实例的getClass方法调用Class对象</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c2 = person.getClass();</span><br></pre></td></tr></table></figure>
-
+<p>​        <code>Class c2 = person.getClass();</code></p>
 <ul>
 <li>已知一个类的包路径,且该类在路径里,通过Class的静态方法forName()获取,可能抛出ClassNotFo undException异常</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c3 = Class.forName(&quot;demo1.Student&quot;);</span><br></pre></td></tr></table></figure>
-
+<p>​        <code>Class c3 = Class.forName(&quot;demo1.Student&quot;);</code></p>
 <ul>
 <li>内置基本数据类型可以直接用类名.Type  </li>
 </ul>
