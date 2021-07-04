@@ -582,25 +582,23 @@
 </ul>
 <p><strong>常用方法</strong>:</p>
 <ul>
-<li><p><code>static ClassforName ( Sting name )返回指定类名 name 的 Class 对象</code></p>
-</li>
-<li><p><code>Object newlnstance () 调用缺省构造函数,返回 Class 对象的一个实例</code></p>
-</li>
-<li><p><code>getName() 返回此 Class 对象所表示的实体(类,接口,数组类 (或 void )的名称。</code></p>
-</li>
-<li><p><code>Class getSuperClass0)返回当前 Class 对象的父类的 Class 对象</code></p>
-</li>
-<li><p><code>Classlgetnterfaces ()获取当前 Class 对象的接口</code></p>
-</li>
-<li><p><code>ClassLoader getClassLoader ()返回该类的类加载器</code></p>
-</li>
-<li><p><code>Constructorl getConstructors0 返回一个包含某些 Constructor 对象的数组</code></p>
-</li>
-<li><p><code>Method getMothed(String name,Class...T) 返回Method对象,此对象的形参类型为paramType</code></p>
-</li>
-<li><p><code>Field[] getDeclardFields() 返回Field对象的一个数组</code></p>
-</li>
+<li><code>static ClassforName ( Sting name )返回指定类名 name 的 Class 对象</code></li>
+<li><code>Object newlnstance () 调用缺省构造函数,返回 Class 对象的一个实例</code></li>
+<li><code>getName() 返回此 Class 对象所表示全限定类名，也就是包名+类名</code></li>
+<li><code>getSimpleName 返回此Class对象所表示的类名</code></li>
+<li><code>Class getSuperClass0)返回当前 Class 对象的父类的 Class 对象</code></li>
+<li><code>Classlgetnterfaces ()获取当前 Class 对象的接口</code></li>
+<li><code>ClassLoader getClassLoader ()返回该类的类加载器</code></li>
+<li><code>Constructorl getConstructors0 返回一个包含某些 Constructor 对象的数组</code></li>
+<li><code>Method getMothed(String name,Class...T) 只能获取此类以及父类所有public方法。返回Method对象,此对象的形参类型为paramType 如有重载方法，注意参数类型</code></li>
+<li><code>Field[] getDeclardFields()  返回Field对象的一个数组,只能获取此类的所有public类型属性</code></li>
+<li><code>Field[] getFields()返回Field对象的一个数组，获取所有属性</code></li>
 </ul>
+<p>PS：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">public class Reflection4 &#123;</span><br><span class="line">    public static void main(String[] args) throws ClassNotFoundException, NoSuchFieldException, NoSuchMethodException &#123;</span><br><span class="line"></span><br><span class="line">        Class c1 = Class.forName(&quot;Reflection.Peison&quot;);//获取此类的Class的对象</span><br><span class="line"></span><br><span class="line">        //获取类名</span><br><span class="line">        System.out.println(c1.getName());//获取全限定类名，也就是包名+类名</span><br><span class="line">        System.out.println(c1.getSimpleName());//获得类名</span><br><span class="line"></span><br><span class="line">        //获取属性</span><br><span class="line">        Field[] fields = c1.getFields();   //getfields()方法只能找到所有public公开的属性</span><br><span class="line">        for (Field field : fields)&#123;</span><br><span class="line">            System.out.println(field);</span><br><span class="line">        &#125;</span><br><span class="line">        Field[] fields1 = c1.getDeclaredFields();  //getDeclaredFields()能获取所有属性</span><br><span class="line">        for (Field field : fields1)&#123;</span><br><span class="line">            System.out.println(field);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //获取指定的属性的值</span><br><span class="line">        Field name = c1.getDeclaredField(&quot;name&quot;);</span><br><span class="line">        System.out.println(name);</span><br><span class="line"></span><br><span class="line">        //获取方法</span><br><span class="line">        Method[] method1 = c1.getMethods();  //获取本类以及父类的全部public方法</span><br><span class="line">        for (Method method:method1) &#123;</span><br><span class="line">            System.out.println(method);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;===================================================================&quot;);</span><br><span class="line"></span><br><span class="line">        Method[] method2 = c1.getDeclaredMethods();  //获取本类的所有方法</span><br><span class="line">        for (Method method:method2) &#123;</span><br><span class="line">            System.out.println(method);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //获取注定方法</span><br><span class="line">        //方法有重载，所以有重载的方法需要写出指定参数类型</span><br><span class="line">        Method method3 = c1.getDeclaredMethod(&quot;setName&quot;, String.class);</span><br><span class="line">        System.out.println(method3);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;===================================================================&quot;);</span><br><span class="line">        //获取构造器(构造方法)</span><br><span class="line">        Constructor [] constructor1 = c1.getConstructors();// 获取本类的public类型构造方法</span><br><span class="line">        for ( Constructor constructor : constructor1)&#123;</span><br><span class="line">            System.out.println(constructor);</span><br><span class="line">        &#125;</span><br><span class="line">        constructor1 = c1.getDeclaredConstructors(); //获取本类的所有构造方法</span><br><span class="line">        for(Constructor constructor :constructor1)&#123;</span><br><span class="line">            System.out.println(&quot;#&quot;+constructor);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //获取指定的构造方法</span><br><span class="line">        Constructor constructor2 = c1.getConstructor(String.class);</span><br><span class="line">        System.out.println(constructor2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
 <h3 id="3-获取Class类的实例"><a href="#3-获取Class类的实例" class="headerlink" title="3.获取Class类的实例"></a><strong>3.获取Class类的实例</strong></h3><ul>
 <li><p>已知具体的类名,通过class属性获取,该方法最为安全可靠,程序性最高.</p>
 <p> <code>Class c1 = person.class;</code></p>
