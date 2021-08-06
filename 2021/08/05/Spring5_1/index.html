@@ -529,6 +529,50 @@
 
 <h3 id="9、提取集合注入部分"><a href="#9、提取集合注入部分" class="headerlink" title="9、提取集合注入部分"></a><strong>9、提取集合注入部分</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class Book &#123;</span><br><span class="line">    private List&lt;String&gt; list;</span><br><span class="line"></span><br><span class="line">    public void setList(List&lt;String&gt; list) &#123;</span><br><span class="line">        this.list = list;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;Book&#123;&quot; +</span><br><span class="line">                &quot;list=&quot; + list +</span><br><span class="line">                &#x27;&#125;&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> &lt;!--提取list集合类型属性注入--&gt;</span><br><span class="line">    &lt;util:list id=&quot;booklist&quot;&gt;</span><br><span class="line">        &lt;value&gt;易筋经&lt;/value&gt;</span><br><span class="line">        &lt;value&gt;九阴真经&lt;/value&gt;</span><br><span class="line">        &lt;value&gt;九阳神功&lt;/value&gt;</span><br><span class="line">    &lt;/util:list&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--提取list集合类型属性注入使用--&gt;</span><br><span class="line">    &lt;bean id=&quot;book&quot; class=&quot;com.huqing.spring5.collectiontype.Book&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;list&quot; ref=&quot;booklist&quot;&gt;&lt;/property&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
 
+<h2 id="一、IOC容器操作Bean管理（FactoryBean"><a href="#一、IOC容器操作Bean管理（FactoryBean" class="headerlink" title="一、IOC容器操作Bean管理（FactoryBean)"></a>一、IOC容器操作Bean管理（FactoryBean)</h2><h3 id="1、spring-有两种bean"><a href="#1、spring-有两种bean" class="headerlink" title="1、spring 有两种bean"></a>1、spring 有两种bean</h3><p>a）普通bean：在配置文件中定义bean类型就是返回类型</p>
+<p>b）工厂bean（FactoeyBean)：在配置文件定义bean类型可以和返回类型不一样</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">  00//第一步 创建类，让这个类作为工厂bean，实现接口FactoryBean</span><br><span class="line">public class MyBean implements FactoryBean&lt;Course&gt; &#123;</span><br><span class="line"></span><br><span class="line">//第二步 实现接口里面的方法，在实现的方法中定义返回的bean类型。</span><br><span class="line">    @Override</span><br><span class="line">    public Course getObject() throws Exception &#123;</span><br><span class="line">        Course course = new Course();</span><br><span class="line">        course.setCname(&quot;abc&quot;);</span><br><span class="line">        return course;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Class&lt;?&gt; getObjectType() &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean isSingleton() &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//测试类</span><br><span class="line">  @Test</span><br><span class="line">    public void testMyBean()&#123;</span><br><span class="line">        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;bean3.xml&quot;);</span><br><span class="line"></span><br><span class="line">        Course course = context.getBean(&quot;myBean&quot;, Course.class);</span><br><span class="line">        System.out.println(course);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">//bean配置</span><br><span class="line">&lt;bean id=&quot;myBean&quot; class=&quot;com.huqing.spring5.factorybean.MyBean&quot;&gt;&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、IOC-操作-Bean-管理（bean-作用域）"><a href="#2、IOC-操作-Bean-管理（bean-作用域）" class="headerlink" title="2、IOC 操作 Bean 管理（bean 作用域）"></a><strong>2、IOC 操作 Bean 管理（bean 作用域）</strong></h3><ol>
+<li><p>在 Spring 里面，默认情况下，bean 是单实例对象，下面进行作用域设置：</p>
+<p>a）在 spring 配置文件 bean 标签里面有属性（scope）用于设置单实例还是多实例</p>
+<p>b）scope 属性值 第一个值 默认值，singleton，表示是单实例对象 第二个值 prototype，表示是多实例对象</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">  @Test</span><br><span class="line">    public void testBook()&#123;</span><br><span class="line">        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;bean2.xml&quot;);</span><br><span class="line"></span><br><span class="line">        Book book1 = context.getBean(&quot;book&quot;, Book.class);</span><br><span class="line">        Book book2 = context.getBean(&quot;book&quot;,Book.class);</span><br><span class="line">        System.out.println(book1);</span><br><span class="line">        System.out.println(book2);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&lt;bean id=&quot;book&quot; class=&quot;com.huqing.spring5.collectiontype.Book&quot; scope=&quot;prototype&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;list&quot; ref=&quot;booklist&quot;&gt;&lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">//输出的对象地址：</span><br><span class="line">com.huqing.spring5.collectiontype.Book@5276d6ee</span><br><span class="line">com.huqing.spring5.collectiontype.Book@71687585</span><br></pre></td></tr></table></figure>
+
+<p>​    2.singleton 和 prototype 区别</p>
+<p>​    a）singleton 单实例，prototype 多实例</p>
+<p>​    b）设置 scope 值是 singleton 时候，加载 spring 配置文件时候就会创建单实例对象 ；设置 scope 值是 prototype 时候，不是在加载 spring 配置文件时候创建对象，在调用 getBean 方法时候创建多实例对象</p>
+<h3 id="2、IOC-操作-Bean-管理（bean-作用域）-1"><a href="#2、IOC-操作-Bean-管理（bean-作用域）-1" class="headerlink" title="2、IOC 操作 Bean 管理（bean 作用域）"></a><strong>2、IOC 操作 Bean 管理（bean 作用域）</strong></h3><p>1、生命周期 ：从对象创建到对象销毁的过程</p>
+<p>2、bean 生命周期</p>
+<p> （1）通过构造器创建 bean 实例（无参数构造）</p>
+<p> （2）为 bean 的属性设置值和对其他 bean 引用（调用 set 方法）</p>
+<p> （3）调用 bean 的初始化的方法（需要进行配置初始化的方法）</p>
+<p> （4）bean 可以使用了（对象获取到了）</p>
+<p> （5）当容器关闭时候，调用 bean 的销毁的方法（需要进行配置销毁的方法）</p>
+<p>3、演示 bean 生命周期 ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class Orders &#123;</span><br><span class="line">    private String oname;</span><br><span class="line"></span><br><span class="line">    //无参数构造</span><br><span class="line">    public Orders() &#123;</span><br><span class="line">        System.out.println(&quot;第一步 执行无参数构造创建bean实例&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setOname(String oname) &#123;</span><br><span class="line">        this.oname = oname;</span><br><span class="line">        System.out.println(&quot;第二步，调用set方法设置属性值&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //创建一个执行的初始化方法</span><br><span class="line">    public void initMethod()&#123;</span><br><span class="line">        System.out.println(&quot;第三步，执行初始化方法&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //创建一个执行销毁的方法</span><br><span class="line">    public void destroyMethod()&#123;</span><br><span class="line">        System.out.println(&quot;第五步，执行销毁方法&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4、bean 的后置处理器，bean 生命周期有七步 （正常生命周期为五步，而配置后置处理器后为七步）</p>
+<p> （1）通过构造器创建 bean 实例（无参数构造）</p>
+<p> （2）为 bean 的属性设置值和对其他 bean 引用（调用 set 方法）</p>
+<p> <strong>（3）把 bean 实例传递 bean 后置处理器的方法 postProcessBeforeInitialization</strong></p>
+<p> （4）调用 bean 的初始化的方法（需要进行配置初始化的方法）</p>
+<p> <strong>（5）把 bean 实例传递 bean 后置处理器的方法 postProcessAfterInitialization</strong></p>
+<p> （6）bean 可以使用了（对象获取到了）</p>
+<p> （7）当容器关闭时候，调用 bean 的销毁的方法（需要进行配置销毁的方法）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//创建后置处理器实现类</span><br><span class="line">public class MyBeanPost implements BeanPostProcessor &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException &#123;</span><br><span class="line">        System.out.println(&quot;在bean初始化之前执行的方法&quot;);</span><br><span class="line">        return bean;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException &#123;</span><br><span class="line">        System.out.println(&quot;在bean初始化之后执行的方法&quot;);</span><br><span class="line">        return bean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//配置bean</span><br><span class="line">   &lt;bean id=&quot;orders&quot; class=&quot;com.huqing.spring5.bean.Orders&quot; init-method=&quot;initMethod&quot; destroy-method=&quot;destroyMethod&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;oname&quot; value=&quot;手机&quot;&gt;&lt;/property&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;bean id=&quot;myBeanPost&quot; class=&quot;com.huqing.spring5.bean.MyBeanPost&quot;&gt;&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、IOC-操作-Bean-管理-外部属性文件"><a href="#4、IOC-操作-Bean-管理-外部属性文件" class="headerlink" title="4、IOC 操作 Bean 管理(外部属性文件)"></a><strong>4、IOC 操作 Bean 管理(外部属性文件)</strong></h3><blockquote>
+<p><strong>方式一：直接配置数据库信息</strong> ：（1）配置Druid（德鲁伊）连接池 （2）引入Druid（德鲁伊）连接池依赖 jar 包</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--直接配置连接池--&gt;</span><br><span class="line">    &lt;bean id=&quot;dataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;driverClassName&quot; value=&quot;com.mysql.jdbc.Driver&quot;&gt;&lt;/property&gt;</span><br><span class="line">        &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/userDb&quot;&gt;&lt;/property&gt;</span><br><span class="line">        &lt;property name=&quot;username&quot; value=&quot;root&quot;&gt;&lt;/property&gt;</span><br><span class="line">        &lt;property name=&quot;password&quot; value=&quot;root&quot;&gt;&lt;/property&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>方式二：引入外部属性文件配置数据库连接池</strong></p>
+<p>（1）创建外部属性文件，properties 格式文件，写数据库信息（<strong>jdbc.properties</strong>）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//创建文件properties</span><br><span class="line">prop.driverClass=com.mysql.cj.jdbc.Driver</span><br><span class="line">prop.url=jdbc:mysql://localhost:3306/tushu?serverTimezone=UTC</span><br><span class="line">prop.userNme=root</span><br><span class="line">prop.password=huqing</span><br><span class="line"></span><br><span class="line">&lt;!--引入外部属性文件--&gt;</span><br><span class="line">&lt;context:property-placeholder location=&quot;classpath:jdbc.properties&quot;/&gt;</span><br><span class="line"> &lt;bean id=&quot;dataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;driverClassName&quot; value=&quot;$&#123;prop.driverClass&#125;&quot;&gt;&lt;/property&gt;</span><br><span class="line">    &lt;property name=&quot;url&quot; value=&quot;$&#123;prop.url&#125;&quot;&gt;&lt;/property&gt;</span><br><span class="line">    &lt;property name=&quot;username&quot; value=&quot;$&#123;prop.userNme&#125;&quot;&gt;&lt;/property&gt;</span><br><span class="line">    &lt;property name=&quot;password&quot; value=&quot;$&#123;prop.password&#125;&quot;&gt;&lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
                 
             </div>
             <hr/>
@@ -822,13 +866,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/08/05/Spring5_/">
+                <a href="/2021/08/04/Select_Basic_statement/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Select的基本语句">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">Select的基本语句</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -839,15 +883,31 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-04
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            HuQing
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/MySQL/" class="post-category">
+                                    MySQL
+                                </a>
+                            
+                            <a href="/categories/MySQL/SELECT/" class="post-category">
+                                    SELECT
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/SELECT/">
+                        <span class="chip bg-color">SELECT</span>
+                    </a>
+                    
                 </div>
                 
             </div>
