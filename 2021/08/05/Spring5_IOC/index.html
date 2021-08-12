@@ -529,7 +529,7 @@
 
 <h3 id="9、提取集合注入部分"><a href="#9、提取集合注入部分" class="headerlink" title="9、提取集合注入部分"></a><strong>9、提取集合注入部分</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class Book &#123;</span><br><span class="line">    private List&lt;String&gt; list;</span><br><span class="line"></span><br><span class="line">    public void setList(List&lt;String&gt; list) &#123;</span><br><span class="line">        this.list = list;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;Book&#123;&quot; +</span><br><span class="line">                &quot;list=&quot; + list +</span><br><span class="line">                &#x27;&#125;&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> &lt;!--提取list集合类型属性注入--&gt;</span><br><span class="line">    &lt;util:list id=&quot;booklist&quot;&gt;</span><br><span class="line">        &lt;value&gt;易筋经&lt;/value&gt;</span><br><span class="line">        &lt;value&gt;九阴真经&lt;/value&gt;</span><br><span class="line">        &lt;value&gt;九阳神功&lt;/value&gt;</span><br><span class="line">    &lt;/util:list&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--提取list集合类型属性注入使用--&gt;</span><br><span class="line">    &lt;bean id=&quot;book&quot; class=&quot;com.huqing.spring5.collectiontype.Book&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;list&quot; ref=&quot;booklist&quot;&gt;&lt;/property&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
 
-<h2 id="一、IOC容器操作Bean管理（FactoryBean"><a href="#一、IOC容器操作Bean管理（FactoryBean" class="headerlink" title="一、IOC容器操作Bean管理（FactoryBean)"></a>一、IOC容器操作Bean管理（FactoryBean)</h2><h3 id="1、spring-有两种bean"><a href="#1、spring-有两种bean" class="headerlink" title="1、spring 有两种bean"></a>1、spring 有两种bean</h3><p>a）普通bean：在配置文件中定义bean类型就是返回类型</p>
+<h2 id="三、IOC容器操作Bean管理（FactoryBean"><a href="#三、IOC容器操作Bean管理（FactoryBean" class="headerlink" title="三、IOC容器操作Bean管理（FactoryBean)"></a>三、IOC容器操作Bean管理（FactoryBean)</h2><h3 id="1、spring-有两种bean"><a href="#1、spring-有两种bean" class="headerlink" title="1、spring 有两种bean"></a>1、spring 有两种bean</h3><p>a）普通bean：在配置文件中定义bean类型就是返回类型</p>
 <p>b）工厂bean（FactoeyBean)：在配置文件定义bean类型可以和返回类型不一样</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">  00//第一步 创建类，让这个类作为工厂bean，实现接口FactoryBean</span><br><span class="line">public class MyBean implements FactoryBean&lt;Course&gt; &#123;</span><br><span class="line"></span><br><span class="line">//第二步 实现接口里面的方法，在实现的方法中定义返回的bean类型。</span><br><span class="line">    @Override</span><br><span class="line">    public Course getObject() throws Exception &#123;</span><br><span class="line">        Course course = new Course();</span><br><span class="line">        course.setCname(&quot;abc&quot;);</span><br><span class="line">        return course;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Class&lt;?&gt; getObjectType() &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean isSingleton() &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//测试类</span><br><span class="line">  @Test</span><br><span class="line">    public void testMyBean()&#123;</span><br><span class="line">        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;bean3.xml&quot;);</span><br><span class="line"></span><br><span class="line">        Course course = context.getBean(&quot;myBean&quot;, Course.class);</span><br><span class="line">        System.out.println(course);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">//bean配置</span><br><span class="line">&lt;bean id=&quot;myBean&quot; class=&quot;com.huqing.spring5.factorybean.MyBean&quot;&gt;&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
 
@@ -544,7 +544,7 @@
 <p>​    2.singleton 和 prototype 区别</p>
 <p>​    a）singleton 单实例，prototype 多实例</p>
 <p>​    b）设置 scope 值是 singleton 时候，加载 spring 配置文件时候就会创建单实例对象 ；设置 scope 值是 prototype 时候，不是在加载 spring 配置文件时候创建对象，在调用 getBean 方法时候创建多实例对象</p>
-<h3 id="2、IOC-操作-Bean-管理（bean-作用域）-1"><a href="#2、IOC-操作-Bean-管理（bean-作用域）-1" class="headerlink" title="2、IOC 操作 Bean 管理（bean 作用域）"></a><strong>2、IOC 操作 Bean 管理（bean 作用域）</strong></h3><p>1、生命周期 ：从对象创建到对象销毁的过程</p>
+<h3 id="3、IOC-操作-Bean-管理（bean-作用域）"><a href="#3、IOC-操作-Bean-管理（bean-作用域）" class="headerlink" title="3、IOC 操作 Bean 管理（bean 作用域）"></a><strong>3、IOC 操作 Bean 管理（bean 作用域）</strong></h3><p>1、生命周期 ：从对象创建到对象销毁的过程</p>
 <p>2、bean 生命周期</p>
 <p> （1）通过构造器创建 bean 实例（无参数构造）</p>
 <p> （2）为 bean 的属性设置值和对其他 bean 引用（调用 set 方法）</p>
@@ -573,6 +573,50 @@
 <p>（1）创建外部属性文件，properties 格式文件，写数据库信息（<strong>jdbc.properties</strong>）</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//创建文件properties</span><br><span class="line">prop.driverClass=com.mysql.cj.jdbc.Driver</span><br><span class="line">prop.url=jdbc:mysql://localhost:3306/tushu?serverTimezone=UTC</span><br><span class="line">prop.userNme=root</span><br><span class="line">prop.password=huqing</span><br><span class="line"></span><br><span class="line">&lt;!--引入外部属性文件--&gt;</span><br><span class="line">&lt;context:property-placeholder location=&quot;classpath:jdbc.properties&quot;/&gt;</span><br><span class="line"> &lt;bean id=&quot;dataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;driverClassName&quot; value=&quot;$&#123;prop.driverClass&#125;&quot;&gt;&lt;/property&gt;</span><br><span class="line">    &lt;property name=&quot;url&quot; value=&quot;$&#123;prop.url&#125;&quot;&gt;&lt;/property&gt;</span><br><span class="line">    &lt;property name=&quot;username&quot; value=&quot;$&#123;prop.userNme&#125;&quot;&gt;&lt;/property&gt;</span><br><span class="line">    &lt;property name=&quot;password&quot; value=&quot;$&#123;prop.password&#125;&quot;&gt;&lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
 
+
+
+
+
+<h2 id="四-IOC-操作-Bean-管理-基于注解方式"><a href="#四-IOC-操作-Bean-管理-基于注解方式" class="headerlink" title="四.IOC 操作 Bean 管理(基于注解方式)"></a>四.IOC 操作 Bean 管理(基于注解方式)</h2><h3 id="1、什么是注解"><a href="#1、什么是注解" class="headerlink" title="1、什么是注解"></a>1、什么是注解</h3><p> （1）注解是代码特殊标记，格式：@注解名称(属性名称=属性值, 属性名称=属性值…)</p>
+<p> （2）使用注解，注解作用在类上面，方法上面，属性上面</p>
+<p> （3）使用注解目的：简化 xml 配置</p>
+<h3 id="2、Spring-针对-Bean-管理中创建对象提供注解"><a href="#2、Spring-针对-Bean-管理中创建对象提供注解" class="headerlink" title="2、Spring 针对 Bean 管理中创建对象提供注解"></a>2、Spring 针对 Bean 管理中创建对象提供注解</h3><p> 下面四个注解功能是一样的，都可以用来创建 bean 实例</p>
+<p> （1）@Component</p>
+<p> （2）@Service</p>
+<p> （3）@Controller</p>
+<p> （4）@Repository</p>
+<h3 id="3、基于注解方式实现对象创建"><a href="#3、基于注解方式实现对象创建" class="headerlink" title="3、基于注解方式实现对象创建"></a>3、基于注解方式实现对象创建</h3><p> 第一步 引入依赖 （引入spring-aop jar包）</p>
+<p> 第二步 开启组件扫描</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--开启组件扫描</span><br><span class="line">    1.如果扫描多个包，多个包使用逗号隔开</span><br><span class="line">    2.扫描包上层目录</span><br><span class="line">--&gt;</span><br><span class="line"></span><br><span class="line">&lt;context:component-scan base-package=&quot;com.huqing.spring5&quot;&gt;&lt;/context:component-scan&gt;</span><br></pre></td></tr></table></figure>
+
+<p> 第三步 创建类，在类上面添加创建对象注解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//注解里面的value属性值可不写</span><br><span class="line">//默认值是类名称，首字母小写</span><br><span class="line">//UserService -&gt; userService</span><br><span class="line">/*@Component(value = &quot;userService&quot;)*/</span><br><span class="line">/*@Service*/</span><br><span class="line">/*@Repository*/</span><br><span class="line">@Controller</span><br><span class="line">public class UserService &#123;</span><br><span class="line">    public void add()&#123;</span><br><span class="line">        System.out.println(&quot;service add......&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、开启组件扫描细节配置"><a href="#4、开启组件扫描细节配置" class="headerlink" title="4、开启组件扫描细节配置"></a><strong>4、开启组件扫描细节配置</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--开启组件扫描细节配置</span><br><span class="line">  use-default-filters=&quot;false&quot;表示现在不使用默认filter,自己配置filter</span><br><span class="line">--&gt;</span><br><span class="line">&lt;!--示例1</span><br><span class="line">  context:include-filte 设置扫描哪些内容</span><br><span class="line">--&gt;</span><br><span class="line"></span><br><span class="line">&lt;context:component-scan base-package=&quot;com.huqing.spring5&quot; use-default-filters=&quot;false&quot;&gt;</span><br><span class="line">    &lt;context:include-filter type=&quot;annotation&quot; expression=&quot;org.springframework.stereotype.Controller&quot;/&gt;</span><br><span class="line">&lt;/context:component-scan&gt;</span><br><span class="line"></span><br><span class="line">&lt;!--示例2</span><br><span class="line">  context:exclude-filter 设置哪些内容不进行扫描</span><br><span class="line">--&gt;</span><br><span class="line">&lt;context:component-scan base-package=&quot;com.huqing.spring5&quot; use-default-filters=&quot;false&quot;&gt;</span><br><span class="line">    &lt;context:exclude-filter type=&quot;annotation&quot; expression=&quot;org.springframework.stereotype.Controller&quot;/&gt;</span><br><span class="line">&lt;/context:component-scan&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、基于注解方式实现属性注入"><a href="#5、基于注解方式实现属性注入" class="headerlink" title="5、基于注解方式实现属性注入"></a>5、基于注解方式实现属性注入</h3><p> （1）@Autowired：根据属性类型进行自动装配</p>
+<p> 第一步 把 service 和 dao 对象创建，在 service 和 dao 类添加创建对象注解</p>
+<p>第二步 在 service 注入 dao 对象，在 service 类添加 dao 类型属性，在属性上面使用注解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">//dao实现类</span><br><span class="line">@Repository</span><br><span class="line">public class UserDaoImpl implements UserDao &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void add() &#123;</span><br><span class="line">        System.out.println(&quot;dao add......&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//注解里面的value属性值可不写</span><br><span class="line">//默认值是类名称，首字母小写</span><br><span class="line">//UserService -&gt; userService</span><br><span class="line">/*@Component(value = &quot;userService&quot;)*/</span><br><span class="line">/*@Service*/</span><br><span class="line">/*@Repository*/</span><br><span class="line">@Service</span><br><span class="line">public class UserService &#123;</span><br><span class="line">    //定义dao类型属性</span><br><span class="line">    //不需要添加set方法</span><br><span class="line">    //添加注入属性注解</span><br><span class="line">    @Autowired</span><br><span class="line">    private UserDao userDao;</span><br><span class="line">    public void add()&#123;</span><br><span class="line">        System.out.println(&quot;service add......&quot;);</span><br><span class="line">        userDao.add();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（2）@Qualifier：根据名称进行注入，这个@Qualifier 注解的使用，和上面@Autowired 一起使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class UserService &#123;</span><br><span class="line">    //定义dao类型属性</span><br><span class="line">    //不需要添加set方法</span><br><span class="line">    //添加注入属性注解</span><br><span class="line">    @Autowired//根据类型进行注入</span><br><span class="line">    //根据名称进行注入（目的在于区别同一接口下有多个实现类，根据类型就无法选择，从而出错！）</span><br><span class="line">    @Qualifier(value = &quot;userDaoImpl&quot;)</span><br><span class="line">    private UserDao userDao;</span><br><span class="line">    public void add()&#123;</span><br><span class="line">        System.out.println(&quot;service add......&quot;);</span><br><span class="line">        userDao.add();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（3）@Resource：可以根据类型注入，也可以根据名称注入（它属于javax包下的注解，不推荐使用！）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//@Resource //根据类型进行注入</span><br><span class="line">@Resource(name = &quot;userDaoImpl1&quot;) //根据名称进行注入</span><br><span class="line">private UserDao userDao;</span><br></pre></td></tr></table></figure>
+
+<p> （4）@Value：注入普通类型属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Value(value = &quot;abc&quot;)</span><br><span class="line">private  String name;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="6、完全注解开发"><a href="#6、完全注解开发" class="headerlink" title="6、完全注解开发"></a><strong>6、完全注解开发</strong></h3><p>（1）创建配置类，替代 xml 配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Configuration //作为配置类，替代xml配置文件</span><br><span class="line">@ComponentScan(basePackages = &#123;&quot;com.huqing&quot;&#125;)</span><br><span class="line">public class SpringConfig &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> （2）编写测试类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void testService2()&#123;</span><br><span class="line">    ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);</span><br><span class="line">    UserService userService = context.getBean(&quot;userService&quot;,UserService.class);</span><br><span class="line">    System.out.println(userService);</span><br><span class="line">    userService.add();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
                 
             </div>
             <hr/>
@@ -598,7 +642,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://XiaoQingc.github.io/2021/08/05/Spring5_1/">http://XiaoQingc.github.io/2021/08/05/Spring5_1/</a>
+                    <a href="http://XiaoQingc.github.io/2021/08/05/Spring5_IOC/">http://XiaoQingc.github.io/2021/08/05/Spring5_IOC/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -807,18 +851,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/08/05/Spring5_1/">
+                <a href="/2021/08/07/Spring5_AOP/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Spring-IOC">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Spring-AOP">
                         
-                        <span class="card-title">Spring-IOC</span>
+                        <span class="card-title">Spring-AOP</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -828,9 +871,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-05
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-07
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -839,20 +882,19 @@
                                     Spring5
                                 </a>
                             
-                            <a href="/categories/Spring5/IOC/" class="post-category">
-                                    IOC
+                            <a href="/categories/Spring5/AOP/" class="post-category">
+                                    AOP
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/IOC/">
-                        <span class="chip bg-color">IOC</span>
+                    <a href="/tags/AOP/">
+                        <span class="chip bg-color">AOP</span>
                     </a>
                     
                 </div>

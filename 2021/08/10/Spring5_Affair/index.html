@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Select的基本语句, Java笔记">
+    <meta name="keywords" content="Spring-事务, Java笔记">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Select的基本语句 | Java笔记</title>
+    <title>Spring-事务 | Java笔记</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Select的基本语句</h1>
+                    <h1 class="description center-align post-title">Spring-事务</h1>
                 </div>
             </div>
         </div>
@@ -431,8 +431,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/SELECT/">
-                                <span class="chip bg-color">SELECT</span>
+                            <a href="/tags/%E4%BA%8B%E5%8A%A1/">
+                                <span class="chip bg-color">事务</span>
                             </a>
                         
                     </div>
@@ -443,12 +443,12 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/MySQL/" class="post-category">
-                                MySQL
+                            <a href="/categories/Spring5/" class="post-category">
+                                Spring5
                             </a>
                         
-                            <a href="/categories/MySQL/SELECT/" class="post-category">
-                                SELECT
+                            <a href="/categories/Spring5/%E4%BA%8B%E5%8A%A1/" class="post-category">
+                                事务
                             </a>
                         
                     </div>
@@ -460,7 +460,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-08-04
+                    2021-08-10
                 </div>
                 
 
@@ -481,16 +481,11 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="1-查询"><a href="#1-查询" class="headerlink" title="1.查询"></a>1.查询</h1><p>USE temp; #使用指定的数据库</p>
-<p>SELECT employee_id,last_name,email<br>FROM employees;</p>
-<p>SELECT department_id,manager_id,location_id<br>FROM departments;</p>
-<p>SELECT *  # * : 代表所有的字段<br>FROM employees;</p>
-<p>SELECT *<br>FROM countries;</p>
-<h1 id="2-列的别名"><a href="#2-列的别名" class="headerlink" title="2.列的别名"></a>2.列的别名</h1><p>#AS : 命名别名的意思<br>#可以使用一对””,给列名起别名<br>SELECT employee_id emp_id,last_name AS lname,salary “monthly salary”<br>FROM employees;</p>
-<h1 id="3-去除重复行"><a href="#3-去除重复行" class="headerlink" title="3.去除重复行"></a>3.去除重复行</h1><p>#DISTINCT : 去除重复行<br>#一般针对某一个值进行去除<br>SELECT DISTINCT department_id<br>FROM employees;</p>
-<p>#如下操作是错误的<br>– SELECT employee_id,DISTINCT department_id<br>– FROM employees;</p>
-<h1 id="4-空值问题"><a href="#4-空值问题" class="headerlink" title="4.空值问题"></a>4.空值问题</h1><p>#空值, 表示没有赋值,理解为null.<br>#空值参与运算的问题 : 结果也为空<br>#空值不等同于0,’’,’null’<br>#IFNULL(判断的值,0) 判断是否为null,为null时赋值为0<br>SELECT employee_id,commission_pct,salary,salary * (1 + commission_pct),salary * (1 + IFNULL(commission_pct,0)) “real_salary”<br>FROM employees;</p>
-<h1 id="5-显示表的结构"><a href="#5-显示表的结构" class="headerlink" title="5.显示表的结构"></a>5.显示表的结构</h1><p>#显示字段的类型,约束,是否为空,默认值等等.<br>DESC employees;<br>DESCRIBE employees;</p>
+                <h1 id="Spring——事务操作"><a href="#Spring——事务操作" class="headerlink" title="Spring——事务操作"></a>Spring——事务操作</h1><h2 id="1、事务概念"><a href="#1、事务概念" class="headerlink" title="1、事务概念"></a>1、事务概念</h2><p> a）什么是事务</p>
+<p> （1）事务是数据库操作最基本单元，逻辑上一组操作，要么都成功，如果有一个失败所有操 作都失败</p>
+<p> （2）典型场景：银行转账 张三 转账 100 元 给 李四； 张三少 100，李四多 100</p>
+<p> b）事务四个特性（ACID） （1）原子性 （2）一致性 （3）隔离性 （4）持久性 可查看这篇文章描述</p>
+<p>2、事务操作（模拟事务操作环境）<br> a）创建 service，搭建 dao，完成对象创建和注入关系</p>
 
                 
             </div>
@@ -517,7 +512,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://XiaoQingc.github.io/2021/08/04/Select_Basic_statement/">http://XiaoQingc.github.io/2021/08/04/Select_Basic_statement/</a>
+                    <a href="http://XiaoQingc.github.io/2021/08/10/Spring5_Affair/">http://XiaoQingc.github.io/2021/08/10/Spring5_Affair/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -555,8 +550,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/SELECT/">
-                                    <span class="chip bg-color">SELECT</span>
+                                <a href="/tags/%E4%BA%8B%E5%8A%A1/">
+                                    <span class="chip bg-color">事务</span>
                                 </a>
                             
                         </div>
@@ -726,17 +721,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/08/05/Spring5_IOC/">
+                <a href="/2021/08/10/Spring5_Affair/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Spring-IOC">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Spring-事务">
                         
-                        <span class="card-title">Spring-IOC</span>
+                        <span class="card-title">Spring-事务</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -746,9 +742,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-05
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-10
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -757,19 +753,20 @@
                                     Spring5
                                 </a>
                             
-                            <a href="/categories/Spring5/IOC/" class="post-category">
-                                    IOC
+                            <a href="/categories/Spring5/%E4%BA%8B%E5%8A%A1/" class="post-category">
+                                    事务
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/IOC/">
-                        <span class="chip bg-color">IOC</span>
+                    <a href="/tags/%E4%BA%8B%E5%8A%A1/">
+                        <span class="chip bg-color">事务</span>
                     </a>
                     
                 </div>
@@ -783,13 +780,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/07/03/Annotation_Reflection/">
+                <a href="/2021/08/07/Spring5_AOP/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="注解与反射">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Spring-AOP">
                         
-                        <span class="card-title">注解与反射</span>
+                        <span class="card-title">Spring-AOP</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -800,18 +797,18 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-07
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Java/" class="post-category">
-                                    Java
+                            <a href="/categories/Spring5/" class="post-category">
+                                    Spring5
                                 </a>
                             
-                            <a href="/categories/Java/%E6%B3%A8%E8%A7%A3%E4%B8%8E%E5%8F%8D%E5%B0%84/" class="post-category">
-                                    注解与反射
+                            <a href="/categories/Spring5/AOP/" class="post-category">
+                                    AOP
                                 </a>
                             
                             
@@ -821,8 +818,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%B3%A8%E8%A7%A3%E4%B8%8E%E5%8F%8D%E5%B0%84/">
-                        <span class="chip bg-color">注解与反射</span>
+                    <a href="/tags/AOP/">
+                        <span class="chip bg-color">AOP</span>
                     </a>
                     
                 </div>
