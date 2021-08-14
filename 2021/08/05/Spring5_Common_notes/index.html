@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Spring-MVC, Java笔记">
+    <meta name="keywords" content="Spring-IOC, Java笔记">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Spring-MVC | Java笔记</title>
+    <title>Spring-IOC | Java笔记</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Spring-MVC</h1>
+                    <h1 class="description center-align post-title">Spring-IOC</h1>
                 </div>
             </div>
         </div>
@@ -431,8 +431,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/MVC/">
-                                <span class="chip bg-color">MVC</span>
+                            <a href="/tags/IOC/">
+                                <span class="chip bg-color">IOC</span>
                             </a>
                         
                     </div>
@@ -443,12 +443,12 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Spring/" class="post-category">
-                                Spring
+                            <a href="/categories/Spring5/" class="post-category">
+                                Spring5
                             </a>
                         
-                            <a href="/categories/Spring/MVC/" class="post-category">
-                                MVC
+                            <a href="/categories/Spring5/IOC/" class="post-category">
+                                IOC
                             </a>
                         
                     </div>
@@ -460,7 +460,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-08-10
+                    2021-08-05
                 </div>
                 
 
@@ -481,53 +481,85 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="一、SpringMVC简介"><a href="#一、SpringMVC简介" class="headerlink" title="一、SpringMVC简介"></a>一、SpringMVC简介</h1><h2 id="1、什么是MVC"><a href="#1、什么是MVC" class="headerlink" title="1、什么是MVC"></a>1、什么是MVC</h2><p>MVC是一种软件架构的思想，将软件按照模型、视图、控制器来划分</p>
-<p>M：Model，模型层，指工程中的JavaBean，作用是处理数据</p>
-<p>JavaBean分为两类：</p>
-<ul>
-<li>一类称为实体类Bean：专门存储业务数据的，如 Student、User 等</li>
-<li>一类称为业务处理 Bean：指 Service 或 Dao 对象，专门用于处理业务逻辑和数据访问。</li>
-</ul>
-<p>V：View，视图层，指工程中的html或jsp等页面，作用是与用户进行交互，展示数据</p>
-<p>C：Controller，控制层，指工程中的servlet，作用是接收请求和响应浏览器</p>
-<p>MVC的工作流程：<br>用户通过视图层发送请求到服务器，在服务器中请求被Controller接收，Controller调用相应的Model层处理请求，处理完毕将结果返回到Controller，Controller再根据请求处理的结果找到相应的View视图，渲染数据后最终响应给浏览器</p>
-<h2 id="2、什么是SpringMVC"><a href="#2、什么是SpringMVC" class="headerlink" title="2、什么是SpringMVC"></a>2、什么是SpringMVC</h2><p>SpringMVC是Spring的一个后续产品，是Spring的一个子项目</p>
-<p>SpringMVC 是 Spring 为表述层开发提供的一整套完备的解决方案。在表述层框架历经 Strust、WebWork、Strust2 等诸多产品的历代更迭之后，目前业界普遍选择了 SpringMVC 作为 Java EE 项目表述层开发的<strong>首选方案</strong>。</p>
-<blockquote>
-<p>注：三层架构分为表述层（或表示层）、业务逻辑层、数据访问层，表述层表示前台页面和后台servlet</p>
-</blockquote>
-<h2 id="3、SpringMVC的特点"><a href="#3、SpringMVC的特点" class="headerlink" title="3、SpringMVC的特点"></a>3、SpringMVC的特点</h2><ul>
-<li><strong>Spring 家族原生产品</strong>，与 IOC 容器等基础设施无缝对接</li>
-<li><strong>基于原生的Servlet</strong>，通过了功能强大的<strong>前端控制器DispatcherServlet</strong>，对请求和响应进行统一处理</li>
-<li>表述层各细分领域需要解决的问题<strong>全方位覆盖</strong>，提供<strong>全面解决方案</strong></li>
-<li><strong>代码清新简洁</strong>，大幅度提升开发效率</li>
-<li>内部组件化程度高，可插拔式组件<strong>即插即用</strong>，想要什么功能配置相应组件即可</li>
-<li><strong>性能卓著</strong>，尤其适合现代大型、超大型互联网项目要求</li>
-</ul>
-<h1 id="二、HelloWorld"><a href="#二、HelloWorld" class="headerlink" title="二、HelloWorld"></a>二、HelloWorld</h1><h2 id="1、开发环境"><a href="#1、开发环境" class="headerlink" title="1、开发环境"></a>1、开发环境</h2><p>IDE：idea 2019.3.2</p>
-<p>构建工具：maven3.6.1</p>
-<p>服务器：tomcat8</p>
-<p>Spring版本：5.3.1</p>
-<h2 id="2、创建maven工程"><a href="#2、创建maven工程" class="headerlink" title="2、创建maven工程"></a>2、创建maven工程</h2><h5 id="1-gt-添加web模块"><a href="#1-gt-添加web模块" class="headerlink" title="1&gt; 添加web模块"></a>1&gt; 添加web模块</h5><h5 id="2-gt-打包方式：war"><a href="#2-gt-打包方式：war" class="headerlink" title="2&gt; 打包方式：war"></a>2&gt; 打包方式：war</h5><h5 id="3-gt-引入依赖"><a href="#3-gt-引入依赖" class="headerlink" title="3&gt; 引入依赖"></a>3&gt; 引入依赖</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;!-- SpringMVC --&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;5.3.1&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 日志 --&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;logback-classic&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;1.2.3&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- ServletAPI --&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;3.1.0&lt;/version&gt;</span><br><span class="line">        &lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- Spring5和Thymeleaf整合包 --&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.thymeleaf&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;thymeleaf-spring5&lt;/artifactId&gt;</span><br><span class="line">        &lt;version&gt;3.0.12.RELEASE&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
+                <h1 id="Spring部分"><a href="#Spring部分" class="headerlink" title="Spring部分"></a><strong>Spring部分</strong></h1><h3 id="1-声明bean的注解"><a href="#1-声明bean的注解" class="headerlink" title="1.声明bean的注解"></a>1.声明bean的注解</h3><p><em><strong>*@Component*</strong></em> 组件，没有明确的角色</p>
+<p><strong>@Service</strong> 在业务逻辑层使用（service层）</p>
+<p><em><strong>*@Repository*</strong></em> 在数据访问层使用（dao层）</p>
+<p><strong>@Controller</strong> 在展现层使用，控制器的声明（C）</p>
+<h3 id="2-注入bean的注解"><a href="#2-注入bean的注解" class="headerlink" title="2.注入bean的注解"></a>2.注入bean的注解</h3><p>@Autowired：由Spring提供</p>
+<p>@Inject：由JSR-330提供</p>
+<p>@Resource：由JSR-250提供</p>
+<p>都可以注解在set方法和属性上，推荐注解在属性上（一目了然，少写代码）。</p>
+<h3 id="3-java配置类相关注解"><a href="#3-java配置类相关注解" class="headerlink" title="3.java配置类相关注解"></a>3.java配置类相关注解</h3><p>@Configuration 声明当前类为配置类，相当于xml形式的Spring配置（类上）</p>
+<p>@Bean 注解在方法上，声明当前方法的返回值为一个bean，替代xml中的方式（方法上）</p>
+<p>@Configuration 声明当前类为配置类，其中内部组合了@Component注解，表明这个类是一个bean（类上）</p>
+<p>@ComponentScan 用于对Component进行扫描，相当于xml中的（类上）</p>
+<p>@WishlyConfiguration 为@Configuration与@ComponentScan的组合注解，可以替代这两个注解</p>
+<h3 id="4-切面（AOP）相关注解"><a href="#4-切面（AOP）相关注解" class="headerlink" title="4.切面（AOP）相关注解"></a>4.切面（AOP）相关注解</h3><p>Spring支持AspectJ的注解式切面编程。</p>
+<p><strong>@Aspect</strong> 声明一个切面（类上）<br>使用****@After、@Before、@Around****定义建言（advice），可直接将拦截规则（切点）作为参数。</p>
+<p><em><strong>*@After*</strong></em> 在方法执行之后执行（方法上）<br><em><strong>*@Before*</strong></em> 在方法执行之前执行（方法上）<br><em><strong>*@Around*</strong></em> 在方法执行之前与之后执行（方法上）</p>
+<p><strong>@PointCut</strong> 声明切点<br>在java配置类中使用@EnableAspectJAutoProxy注解开启Spring对AspectJ代理的支持（类上）</p>
+<h3 id="5-Bean的属性支持"><a href="#5-Bean的属性支持" class="headerlink" title="5.@Bean的属性支持"></a>5.@Bean的属性支持</h3><p><em><strong>*@Scope*</strong></em> 设置Spring容器如何新建Bean实例（方法上，得有@Bean）<br>其设置类型包括：</p>
+<p>Singleton （单例,一个Spring容器中只有一个bean实例，默认模式）,<br>Protetype （每次调用新建一个bean）,<br>Request （web项目中，给每个http request新建一个bean）,<br>Session （web项目中，给每个http session新建一个bean）,<br>GlobalSession（给每一个 global http session新建一个Bean实例）</p>
+<p><em><strong>*@StepScope*</strong></em> 在Spring Batch中还有涉及</p>
+<p><em><strong>*@PostConstruct*</strong></em> 由JSR-250提供，在构造函数执行完之后执行，等价于xml配置文件中bean的initMethod</p>
+<p><em><strong>*@PreDestory*</strong></em> 由JSR-250提供，在Bean销毁之前执行，等价于xml配置文件中bean的destroyMethod</p>
+<h3 id="6-Value注解"><a href="#6-Value注解" class="headerlink" title="6.@Value注解"></a>6.@Value注解</h3><p><strong>@Value</strong> 为属性注入值（属性上）<br>支持如下方式的注入：<br>》注入普通字符</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Value(&quot;Michael Jackson&quot;)</span><br><span class="line">String name;</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>注：由于 Maven 的传递性，我们不必将所有需要的包全部配置依赖，而是配置最顶端的依赖，其他靠传递性导入。</p>
-</blockquote>
-<p><img src="C:\Users\10928\AppData\Roaming\Typora\typora-user-images\image-20210813224415388.png" alt="image-20210813224415388"></p>
-<h2 id="3、配置web-xml"><a href="#3、配置web-xml" class="headerlink" title="3、配置web.xml"></a>3、配置web.xml</h2><p>注册SpringMVC的前端控制器DispatcherServlet</p>
-<h5 id="1-gt-默认配置方式"><a href="#1-gt-默认配置方式" class="headerlink" title="1&gt;默认配置方式"></a>1&gt;默认配置方式</h5><p>此配置作用下，SpringMVC的配置文件默认位于WEB-INF下，默认名称为<servlet-name>-servlet.xml，例如，以下配置所对应SpringMVC的配置文件位于WEB-INF下，文件名为springMVC-servlet.xml</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--配置SpringMVC的前端控制器,对浏览器发送的请求进行统一处理--&gt;</span><br><span class="line">&lt;servlet&gt;</span><br><span class="line">    &lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;</span><br><span class="line">    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;</span><br><span class="line">&lt;/servlet&gt;</span><br><span class="line">&lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;</span><br><span class="line">    &lt;!--</span><br><span class="line">        设置springMVC的核心控制器所能处理的请求的请求路径</span><br><span class="line">        /所匹配的请求可以是/login或.html或.js或.css方式的请求路径</span><br><span class="line">        但是/不能匹配.jsp请求路径的请求</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;url-pattern&gt;/&lt;/url-pattern&gt;</span><br><span class="line">&lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
+<p>》注入操作系统属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Value(&quot;#&#123;systemProperties[&#x27;os.name&#x27;]&#125;&quot;)</span><br><span class="line">String osName;</span><br></pre></td></tr></table></figure>
 
-<h5 id="2-gt-扩展配置方式"><a href="#2-gt-扩展配置方式" class="headerlink" title="2&gt;扩展配置方式"></a>2&gt;扩展配置方式</h5><p>可通过init-param标签设置SpringMVC配置文件的位置和名称，通过load-on-startup标签设置SpringMVC前端控制器DispatcherServlet的初始化时间</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--配置SpringMVC的前端控制器,对浏览器发送的请求进行统一处理--&gt;</span><br><span class="line">&lt;servlet&gt;</span><br><span class="line">    &lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;</span><br><span class="line">    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;</span><br><span class="line">    &lt;!--配置SpringMVC配置文件的位置和名称--&gt;</span><br><span class="line">    &lt;init-param&gt;</span><br><span class="line">        &lt;!-- contextConfigLocation为固定值 --&gt;</span><br><span class="line">        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</span><br><span class="line">        &lt;!-- 使用classpath:表示从类路径查找配置文件，例如maven工程中的src/main/resources --&gt;</span><br><span class="line">        &lt;param-value&gt;classpath:springMVC.xml&lt;/param-value&gt;</span><br><span class="line">    &lt;/init-param&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--</span><br><span class="line">    作为框架的核心组件，在启动过程中有大量的初始化操作要做</span><br><span class="line">   而这些操作放在第一次请求时才执行会严重影响访问速度</span><br><span class="line">   因此需要通过此标签将启动控制DispatcherServlet的初始化时间提前到服务器启动时</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;!--将前端控制器DispatcherServlet的初始化时间提前到服务器启动时--&gt;</span><br><span class="line">    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</span><br><span class="line"></span><br><span class="line">&lt;/servlet&gt;</span><br><span class="line">&lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;SpringMVC&lt;/servlet-name&gt;</span><br><span class="line">    &lt;!--</span><br><span class="line">        设置springMVC的核心控制器所能处理的请求的请求路径</span><br><span class="line">        /所匹配的请求可以是/login或.html或.js或.css方式的请求路径</span><br><span class="line">        但是/不能匹配.jsp请求路径的请求</span><br><span class="line">    --&gt;</span><br><span class="line">    &lt;url-pattern&gt;/&lt;/url-pattern&gt;</span><br><span class="line">&lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
+<p>》注入表达式结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Value(&quot;#&#123; T(java.lang.Math).random() * 100 &#125;&quot;) </span><br><span class="line">String randomNumber;</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>注：</p>
-<p><url-pattern>标签中使用/和/*的区别：</p>
-<p>/所匹配的请求可以是/login或.html或.js或.css方式的请求路径，但是/不能匹配.jsp请求路径的请求</p>
-<p>因此就可以避免在访问jsp页面时，该请求被DispatcherServlet处理，从而找不到相应的页面</p>
-<p>/* 则能够匹配所有请求，例如在使用过滤器时，若需要对所有请求进行过滤，就需要使用/*的写法</p>
-</blockquote>
+<p>》注入其它bean属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Value(&quot;#&#123;domeClass.name&#125;&quot;)</span><br><span class="line">String name;</span><br></pre></td></tr></table></figure>
+
+<p>》注入文件资源</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Value(&quot;classpath:com/hgs/hello/test.txt&quot;)</span><br><span class="line">String Resource file;</span><br></pre></td></tr></table></figure>
+
+<p>》注入网站资源</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Value(&quot;http://www.cznovel.com&quot;)</span><br><span class="line">Resource url;</span><br></pre></td></tr></table></figure>
+
+<p>》<strong>注入配置文件</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Value(&quot;$&#123;book.name&#125;&quot;)</span><br><span class="line">String bookName;</span><br></pre></td></tr></table></figure>
+
+<p>注入配置使用方法：<br>① 编写配置文件（test.properties）</p>
+<p>book.name=《三体》</p>
+<p>② @PropertySource 加载配置文件(类上)</p>
+<p>@PropertySource(“classpath:com/hgs/hello/test/test.propertie”)</p>
+<p>③ 还需配置一个PropertySourcesPlaceholderConfigurer的bean。</p>
+<h3 id="7-环境切换"><a href="#7-环境切换" class="headerlink" title="7.环境切换"></a>7.环境切换</h3><p>@Profile 通过设定Environment的ActiveProfiles来设定当前context需要使用的配置环境。（类或方法上）</p>
+<p><em><strong>*@Conditional*</strong></em> Spring4中可以使用此注解定义条件话的bean，通过实现Condition接口，并重写matches方法，从而决定该bean是否被实例化。（方法上）</p>
+<h3 id="8-异步相关"><a href="#8-异步相关" class="headerlink" title="8.异步相关"></a>8.异步相关</h3><p><strong>@EnableAsync</strong> 配置类中，通过此注解开启对异步任务的支持，叙事性AsyncConfigurer接口（类上）</p>
+<p><strong>@Async</strong> 在实际执行的bean方法使用该注解来申明其是一个异步任务（方法上或类上<em>所有的方法都将异步</em>，需要@EnableAsync开启异步任务）</p>
+<h3 id="9-定时任务相关"><a href="#9-定时任务相关" class="headerlink" title="9.定时任务相关"></a>9.定时任务相关</h3><p><strong>@EnableScheduling</strong> 在配置类上使用，开启计划任务的支持（类上）</p>
+<p><strong>@Scheduled</strong> 来申明这是一个任务，包括cron,fixDelay,fixRate等类型（方法上，需先开启计划任务的支持）</p>
+<h3 id="10-Enable-注解说明"><a href="#10-Enable-注解说明" class="headerlink" title="10.@Enable*注解说明"></a><strong>10.@Enable*注解说明</strong></h3><p>这些注解主要用来开启对xxx的支持。<br><strong>@EnableAspectJAutoProxy</strong> 开启对AspectJ自动代理的支持</p>
+<p><strong>@EnableAsync</strong> 开启异步方法的支持</p>
+<p><strong>@EnableScheduling</strong> 开启计划任务的支持</p>
+<p><strong>@EnableWebMvc</strong> 开启Web MVC的配置支持</p>
+<p><strong>@EnableConfigurationProperties</strong> 开启对@ConfigurationProperties注解配置Bean的支持</p>
+<p><strong>@EnableJpaRepositories</strong> 开启对SpringData JPA Repository的支持</p>
+<p><strong>@EnableTransactionManagement</strong> 开启注解式事务的支持</p>
+<p><strong>@EnableTransactionManagement</strong> 开启注解式事务的支持</p>
+<p><strong>@EnableCaching</strong> 开启注解式的缓存支持</p>
+<p>11.测试相关注解</p>
+<p><strong>@RunWith</strong> 运行器，Spring中通常用于对JUnit的支持</p>
+<p><strong>@ContextConfiguration</strong> 用来加载配置ApplicationContext，其中classes属性用来加载配置类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">@ContextConfiguration(classes=&#123;TestConfig.class&#125;)</span><br><span class="line">public class KjtTest &#123;</span><br><span class="line">    private static Logger logger = LoggerFactory.getLogger(&quot;KjtTest&quot;);</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    Service service;</span><br><span class="line">    @Test</span><br><span class="line">    public void test() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SpringMVC部分"><a href="#SpringMVC部分" class="headerlink" title="SpringMVC部分"></a>SpringMVC部分</h2><p><strong>@EnableWebMvc</strong> 在配置类中开启Web MVC的配置支持，如一些ViewResolver或者MessageConverter等，若无此句，重写WebMvcConfigurerAdapter方法（用于对SpringMVC的配置）。</p>
+<p><em><strong>*@Controller*</strong></em> 声明该类为SpringMVC中的Controller</p>
+<p><em><strong>*@RequestMapping*</strong></em> 用于映射Web请求，包括访问路径和参数（类或方法上）</p>
+<p><strong>@ResponseBody</strong> 支持将返回值放在response内，而不是一个页面，通常用户返回json数据（返回值旁或方法上）</p>
+<p><strong>@RequestBody</strong> 允许request的参数在request体中，而不是在直接连接在地址后面。（放在参数前）</p>
+<p><strong>@PathVariable</strong> 用于接收路径参数，比如@RequestMapping(“/hello/{name}”)申明的路径，将注解放在参数中前，即可获取该值，通常作为Restful的接口实现方法。</p>
+<p><strong>@RestController</strong> 该注解为一个组合注解，相当于@Controller和@ResponseBody的组合，注解在类上，意味着，该Controller的所有方法都默认加上了@ResponseBody。</p>
+<p><strong>@ControllerAdvice</strong> 通过该注解，我们可以将对于控制器的全局配置放置在同一个位置，注解了@Controller的类的方法可使用@ExceptionHandler、@InitBinder、@ModelAttribute注解到方法上，<br>这对所有注解了 @RequestMapping的控制器内的方法有效。</p>
+<p><strong>@ExceptionHandler</strong> 用于全局处理控制器里的异常</p>
+<p><strong>@InitBinder</strong> 用来设置WebDataBinder，WebDataBinder用来自动绑定前台请求参数到Model中。</p>
+<p><strong>@ModelAttribute</strong> 本来的作用是绑定键值对到Model里，在@ControllerAdvice中是让全局的@RequestMapping都能获得在此处设置的键值对。</p>
 
                 
             </div>
@@ -554,7 +586,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://XiaoQingc.github.io/2021/08/10/Spring_MVC/">http://XiaoQingc.github.io/2021/08/10/Spring_MVC/</a>
+                    <a href="http://XiaoQingc.github.io/2021/08/05/Spring5_Common_notes/">http://XiaoQingc.github.io/2021/08/05/Spring5_Common_notes/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -592,8 +624,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/MVC/">
-                                    <span class="chip bg-color">MVC</span>
+                                <a href="/tags/IOC/">
+                                    <span class="chip bg-color">IOC</span>
                                 </a>
                             
                         </div>
@@ -767,59 +799,6 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/08/10/Spring5_Affair/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Spring-事务">
-                        
-                        <span class="card-title">Spring-事务</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-10
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Spring5/" class="post-category">
-                                    Spring5
-                                </a>
-                            
-                            <a href="/categories/Spring5/%E4%BA%8B%E5%8A%A1/" class="post-category">
-                                    事务
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E4%BA%8B%E5%8A%A1/">
-                        <span class="chip bg-color">事务</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
                 <a href="/2021/08/07/Spring5_AOP/">
                     <div class="card-image">
                         
@@ -836,9 +815,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-07
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-07
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -860,6 +839,59 @@
                     
                     <a href="/tags/AOP/">
                         <span class="chip bg-color">AOP</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/08/05/Spring5_IOC/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Spring-IOC">
+                        
+                        <span class="card-title">Spring-IOC</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-05
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Spring5/" class="post-category">
+                                    Spring5
+                                </a>
+                            
+                            <a href="/categories/Spring5/IOC/" class="post-category">
+                                    IOC
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/IOC/">
+                        <span class="chip bg-color">IOC</span>
                     </a>
                     
                 </div>
